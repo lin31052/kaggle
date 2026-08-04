@@ -1,6 +1,10 @@
 import copy
 import time
 import argparse
+import sys
+
+# 让 print 实时输出到终端，避免脚本结束后一次性刷出
+sys.stdout.reconfigure(line_buffering=True)
 
 import torch
 from torchvision.datasets import ImageFolder
@@ -96,6 +100,10 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs, mod
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=num_epochs) if use_cosine else None
     # 将模型放入到训练设备中
     model = model.to(device)
+    # 多 GPU 时启用 DataParallel 并行（单卡时无影响）
+    if torch.cuda.device_count() > 1:
+        model = nn.DataParallel(model)
+        print(f"已启用 {torch.cuda.device_count()} 卡并行训练")
     # 复制当前模型的参数
     best_model_wts = copy.deepcopy(model.state_dict())
 
@@ -211,8 +219,10 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs, mod
 
     # 选择最优参数，保存最优参数的模型
     model.load_state_dict(best_model_wts)
+    # 剥离 DataParallel 的 module. 前缀，保证与单卡测试脚本兼容
+    state_dict = {k.replace('module.', ''): v for k, v in best_model_wts.items()}
     # 按模型名区分保存，避免互相覆盖
-    torch.save(best_model_wts, f"best_model_{model_name}.pth")
+    torch.save(state_dict, f"best_model_{model_name}.pth")
     print(f"最佳验证准确率: {best_acc:.4f}，已保存 best_model_{model_name}.pth")
 
 
