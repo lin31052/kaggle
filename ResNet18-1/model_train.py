@@ -3,8 +3,10 @@ import time
 import argparse
 import sys
 
-# 让 print 实时输出到终端，避免脚本结束后一次性刷出
-sys.stdout.reconfigure(line_buffering=True)
+# Jupyter / Kaggle cell 的 stdout 有缓冲，monkey-patch print 强制 flush，
+# 让每个 epoch 日志实时显示，无需 nohup/tee/tail
+import functools, builtins
+builtins.print = functools.partial(builtins.print, flush=True)
 
 import torch
 from torchvision.datasets import ImageFolder
