@@ -1,0 +1,8 @@
+# Python 缓存与构建产物
+__pycache__/
+*.py[cod]
+*.pyc
+
+# IDE 配置
+.idea/
+.vscode/
