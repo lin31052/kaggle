@@ -35,7 +35,7 @@ def build_model(model_name):
     block_cls = getattr(module, block_cls)
     return net_cls(block_cls)
 
-def train_val_data_process(seed=42, aug=False, pt_norm=False):
+def train_val_data_process(seed=42, aug=False, pt_norm=False, batch_size=32):
     # 固定随机种子，保证三种模型使用完全相同的 train/val 划分（公平对比）
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -69,7 +69,7 @@ def train_val_data_process(seed=42, aug=False, pt_norm=False):
 
     train_data, val_data = Data.random_split(train_data, [round(0.8*len(train_data)), round(0.2*len(train_data))])
     train_dataloader = Data.DataLoader(dataset=train_data,
-                                       batch_size=32,
+                                       batch_size=batch_size,
                                        shuffle=True,
                                        num_workers=2)
 
@@ -77,7 +77,7 @@ def train_val_data_process(seed=42, aug=False, pt_norm=False):
     val_transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(), normalize])
     val_data.dataset.transform = val_transform
     val_dataloader = Data.DataLoader(dataset=val_data,
-                                       batch_size=32,
+                                       batch_size=batch_size,
                                        shuffle=True,
                                        num_workers=2)
 
@@ -252,6 +252,7 @@ if __name__ == '__main__':
     parser.add_argument("--seed", type=int, default=42, help="随机种子（保证数据划分一致）")
     parser.add_argument("--aug", action="store_true", help="训练集启用数据增强（随机翻转/旋转/颜色抖动）")
     parser.add_argument("--lr", type=float, default=0.001, help="初始学习率（预训练微调建议 1e-4~1e-3）")
+    parser.add_argument("--batch_size", type=int, default=32, help="训练/验证 batch size")
     parser.add_argument("--cosine", action="store_true", help="使用余弦退火学习率调度")
     args = parser.parse_args()
 
@@ -262,7 +263,7 @@ if __name__ == '__main__':
     model = build_model(args.model)
     # 预训练模型也使用数据集自身归一化（实证：本数据集 ImageNet 统计量反而更低）
     # 加载数据集（固定种子保证公平对比）
-    train_data, val_data = train_val_data_process(seed=args.seed, aug=args.aug, pt_norm=False)
+    train_data, val_data = train_val_data_process(seed=args.seed, aug=args.aug, pt_norm=False, batch_size=args.batch_size)
     # 利用现有的模型进行模型的训练
     train_process = train_model_process(model, train_data, val_data, num_epochs=args.epochs,
                                         model_name=run_tag, lr=args.lr, use_cosine=args.cosine)
