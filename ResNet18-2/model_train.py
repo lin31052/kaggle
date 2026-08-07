@@ -51,12 +51,6 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
     criterion = nn.CrossEntropyLoss()
     # 将模型放入到训练设备中
     model = model.to(device)
-    # torch.compile 图编译加速；个别环境不支持时自动回退，不影响训练
-    try:
-        model = torch.compile(model)
-        print("[加速] torch.compile 已启用")
-    except Exception as e:
-        print(f"[提示] torch.compile 不可用，跳过: {e}")
     # AMP 梯度缩放器（仅在 CUDA 上生效）
     scaler = torch.amp.GradScaler('cuda', enabled=USE_AMP)
     # 复制当前模型的参数
