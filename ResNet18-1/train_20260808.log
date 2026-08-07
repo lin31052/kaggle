@@ -1,0 +1,253 @@
+已启用 2 卡并行训练
+Epoch 0/49
+----------
+0 train loss:0.9403 train acc: 0.5863
+0 val loss:0.9503 val acc: 0.6378
+训练和验证耗费的时间0m15s
+Epoch 1/49
+----------
+1 train loss:0.6233 train acc: 0.6739
+1 val loss:0.6626 val acc: 0.6378
+训练和验证耗费的时间0m24s
+Epoch 2/49
+----------
+2 train loss:0.5875 train acc: 0.6846
+2 val loss:0.5137 val acc: 0.7459
+训练和验证耗费的时间0m33s
+Epoch 3/49
+----------
+3 train loss:0.5608 train acc: 0.7049
+3 val loss:0.6560 val acc: 0.6432
+训练和验证耗费的时间0m42s
+Epoch 4/49
+----------
+4 train loss:0.5237 train acc: 0.7412
+4 val loss:0.5217 val acc: 0.7514
+训练和验证耗费的时间0m51s
+Epoch 5/49
+----------
+5 train loss:0.5280 train acc: 0.7372
+5 val loss:0.6386 val acc: 0.6757
+训练和验证耗费的时间0m60s
+Epoch 6/49
+----------
+6 train loss:0.5518 train acc: 0.7251
+6 val loss:0.5284 val acc: 0.7243
+训练和验证耗费的时间1m11s
+Epoch 7/49
+----------
+7 train loss:0.4826 train acc: 0.7709
+7 val loss:0.4101 val acc: 0.8162
+训练和验证耗费的时间1m19s
+Epoch 8/49
+----------
+8 train loss:0.5150 train acc: 0.7668
+8 val loss:0.4676 val acc: 0.7730
+训练和验证耗费的时间1m28s
+Epoch 9/49
+----------
+9 train loss:0.4650 train acc: 0.7871
+9 val loss:0.5632 val acc: 0.8108
+训练和验证耗费的时间1m38s
+Epoch 10/49
+----------
+10 train loss:0.4738 train acc: 0.7722
+10 val loss:0.5825 val acc: 0.7946
+训练和验证耗费的时间1m47s
+Epoch 11/49
+----------
+11 train loss:0.4524 train acc: 0.8073
+11 val loss:0.8313 val acc: 0.5892
+训练和验证耗费的时间1m57s
+Epoch 12/49
+----------
+12 train loss:0.4373 train acc: 0.8005
+12 val loss:0.5273 val acc: 0.7243
+训练和验证耗费的时间2m7s
+Epoch 13/49
+----------
+13 train loss:0.3921 train acc: 0.8356
+13 val loss:0.7704 val acc: 0.6811
+训练和验证耗费的时间2m17s
+Epoch 14/49
+----------
+14 train loss:0.3659 train acc: 0.8558
+14 val loss:0.9568 val acc: 0.6054
+训练和验证耗费的时间2m28s
+Epoch 15/49
+----------
+15 train loss:0.3651 train acc: 0.8504
+15 val loss:0.4352 val acc: 0.8216
+训练和验证耗费的时间2m40s
+Epoch 16/49
+----------
+16 train loss:0.3768 train acc: 0.8544
+16 val loss:0.3167 val acc: 0.8865
+训练和验证耗费的时间2m50s
+Epoch 17/49
+----------
+17 train loss:0.3172 train acc: 0.8679
+17 val loss:0.2926 val acc: 0.8865
+训练和验证耗费的时间2m59s
+Epoch 18/49
+----------
+18 train loss:0.3007 train acc: 0.8760
+18 val loss:0.5555 val acc: 0.7730
+训练和验证耗费的时间3m10s
+Epoch 19/49
+----------
+19 train loss:0.2817 train acc: 0.8801
+19 val loss:0.4532 val acc: 0.7892
+训练和验证耗费的时间3m20s
+Epoch 20/49
+----------
+20 train loss:0.2755 train acc: 0.8841
+20 val loss:0.4704 val acc: 0.8649
+训练和验证耗费的时间3m29s
+Epoch 21/49
+----------
+21 train loss:0.2673 train acc: 0.9043
+21 val loss:0.3075 val acc: 0.8703
+训练和验证耗费的时间3m38s
+Epoch 22/49
+----------
+22 train loss:0.2370 train acc: 0.9043
+22 val loss:0.2886 val acc: 0.9027
+训练和验证耗费的时间3m47s
+Epoch 23/49
+----------
+23 train loss:0.2471 train acc: 0.9057
+23 val loss:0.2638 val acc: 0.8865
+训练和验证耗费的时间3m57s
+Epoch 24/49
+----------
+24 train loss:0.1980 train acc: 0.9259
+24 val loss:0.2892 val acc: 0.8649
+训练和验证耗费的时间4m8s
+Epoch 25/49
+----------
+25 train loss:0.2128 train acc: 0.9164
+25 val loss:0.3465 val acc: 0.8703
+训练和验证耗费的时间4m17s
+Epoch 26/49
+----------
+26 train loss:0.2482 train acc: 0.9111
+26 val loss:0.1965 val acc: 0.9189
+训练和验证耗费的时间4m26s
+Epoch 27/49
+----------
+27 train loss:0.1792 train acc: 0.9299
+27 val loss:0.2596 val acc: 0.9081
+训练和验证耗费的时间4m36s
+Epoch 28/49
+----------
+28 train loss:0.1893 train acc: 0.9272
+28 val loss:0.3727 val acc: 0.8757
+训练和验证耗费的时间4m46s
+Epoch 29/49
+----------
+29 train loss:0.1692 train acc: 0.9367
+29 val loss:0.2753 val acc: 0.8703
+训练和验证耗费的时间4m55s
+Epoch 30/49
+----------
+30 train loss:0.1822 train acc: 0.9164
+30 val loss:0.3245 val acc: 0.8811
+训练和验证耗费的时间5m6s
+Epoch 31/49
+----------
+31 train loss:0.1820 train acc: 0.9380
+31 val loss:0.4464 val acc: 0.8270
+训练和验证耗费的时间5m15s
+Epoch 32/49
+----------
+32 train loss:0.1151 train acc: 0.9582
+32 val loss:0.2455 val acc: 0.9189
+训练和验证耗费的时间5m25s
+Epoch 33/49
+----------
+33 train loss:0.1286 train acc: 0.9542
+33 val loss:0.2608 val acc: 0.8919
+训练和验证耗费的时间5m34s
+Epoch 34/49
+----------
+34 train loss:0.1215 train acc: 0.9623
+34 val loss:0.2620 val acc: 0.9189
+训练和验证耗费的时间5m43s
+Epoch 35/49
+----------
+35 train loss:0.1871 train acc: 0.9205
+35 val loss:0.2318 val acc: 0.8973
+训练和验证耗费的时间5m52s
+Epoch 36/49
+----------
+36 train loss:0.1395 train acc: 0.9528
+36 val loss:2.4455 val acc: 0.6324
+训练和验证耗费的时间6m3s
+Epoch 37/49
+----------
+37 train loss:0.1482 train acc: 0.9340
+37 val loss:0.5962 val acc: 0.7676
+训练和验证耗费的时间6m13s
+Epoch 38/49
+----------
+38 train loss:0.1328 train acc: 0.9528
+38 val loss:0.3461 val acc: 0.9027
+训练和验证耗费的时间6m23s
+Epoch 39/49
+----------
+39 train loss:0.0876 train acc: 0.9690
+39 val loss:0.1864 val acc: 0.9459
+训练和验证耗费的时间6m33s
+Epoch 40/49
+----------
+40 train loss:0.0564 train acc: 0.9825
+40 val loss:0.4481 val acc: 0.8541
+训练和验证耗费的时间6m42s
+Epoch 41/49
+----------
+41 train loss:0.1346 train acc: 0.9474
+41 val loss:0.2501 val acc: 0.9243
+训练和验证耗费的时间6m52s
+Epoch 42/49
+----------
+42 train loss:0.0771 train acc: 0.9717
+42 val loss:0.2303 val acc: 0.9081
+训练和验证耗费的时间7m3s
+Epoch 43/49
+----------
+43 train loss:0.0838 train acc: 0.9677
+43 val loss:0.3446 val acc: 0.8973
+训练和验证耗费的时间7m12s
+Epoch 44/49
+----------
+44 train loss:0.0560 train acc: 0.9811
+44 val loss:0.7177 val acc: 0.8000
+训练和验证耗费的时间7m21s
+Epoch 45/49
+----------
+45 train loss:0.0804 train acc: 0.9744
+45 val loss:0.4107 val acc: 0.8973
+训练和验证耗费的时间7m31s
+Epoch 46/49
+----------
+46 train loss:0.0943 train acc: 0.9717
+46 val loss:0.9669 val acc: 0.7568
+训练和验证耗费的时间7m41s
+Epoch 47/49
+----------
+47 train loss:0.0805 train acc: 0.9771
+47 val loss:0.1842 val acc: 0.9297
+训练和验证耗费的时间7m51s
+Epoch 48/49
+----------
+48 train loss:0.1532 train acc: 0.9367
+48 val loss:0.2747 val acc: 0.8811
+训练和验证耗费的时间8m3s
+Epoch 49/49
+----------
+49 train loss:0.1563 train acc: 0.9447
+49 val loss:0.6440 val acc: 0.7892
+训练和验证耗费的时间8m12s
+最佳验证准确率: 0.9459，已保存 best_model_baseline.pth
+训练曲线已保存: train_curve_baseline.png
