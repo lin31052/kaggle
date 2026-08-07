@@ -10,5 +10,5 @@ per_device_train_batch_size: 4
 gradient_accumulation_steps: 4
 learning_rate: 2.0e-4
 num_train_epochs: 2.0
-compute_dtype: fp16
+torch_dtype: fp16
 output_dir: /kaggle/working/qwen05-lora
