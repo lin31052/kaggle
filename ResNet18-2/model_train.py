@@ -58,7 +58,7 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
     except Exception as e:
         print(f"[提示] torch.compile 不可用，跳过: {e}")
     # AMP 梯度缩放器（仅在 CUDA 上生效）
-    scaler = torch.cuda.amp.GradScaler(enabled=USE_AMP)
+    scaler = torch.amp.GradScaler('cuda', enabled=USE_AMP)
     # 复制当前模型的参数
     best_model_wts = copy.deepcopy(model.state_dict())
 
@@ -107,7 +107,7 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
             optimizer.zero_grad()
 
             # AMP：FP16 前向 + 损失，权重保持 FP32
-            with torch.cuda.amp.autocast(enabled=USE_AMP):
+            with torch.amp.autocast('cuda', enabled=USE_AMP):
                 # 前向传播过程，输入为一个batch，输出为一个batch中对应的预测
                 output = model(b_x)
                 # 计算每一个batch的损失函数
@@ -133,7 +133,7 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
             b_y = b_y.to(device)
             # 设置模型为评估模式
             model.eval()
-            with torch.no_grad(), torch.cuda.amp.autocast(enabled=USE_AMP):
+            with torch.no_grad(), torch.amp.autocast('cuda', enabled=USE_AMP):
                 # 前向传播过程，输入为一个batch，输出为一个batch中对应的预测
                 output = model(b_x)
                 # 计算每一个batch的损失函数
