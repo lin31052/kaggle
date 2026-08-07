@@ -1,0 +1,6 @@
+{
+  "persona": {
+    "file_name": "persona.json",
+    "columns": {"prompt": "instruction", "query": "input", "response": "output"}
+  }
+}
