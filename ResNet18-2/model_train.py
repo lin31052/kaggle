@@ -11,6 +11,12 @@ from model import ResNet18, Residual
 import torch.nn as nn
 import pandas as pd
 
+# ===== Kaggle T4 加速配置 =====
+# cudnn benchmark：输入尺寸固定 224x224 时自动选择最优卷积算法
+torch.backends.cudnn.benchmark = True
+# AMP 混合精度：T4 有 Tensor Core，FP16 吞吐约为 FP32 的 2 倍
+USE_AMP = True
+
 def train_val_data_process():
     # 定义数据集的路径
     ROOT_TRAIN = 'data/train'
@@ -25,12 +31,12 @@ def train_val_data_process():
     train_dataloader = Data.DataLoader(dataset=train_data,
                                        batch_size=32,
                                        shuffle=True,
-                                       num_workers=2)
+                                       num_workers=4)
 
     val_dataloader = Data.DataLoader(dataset=val_data,
                                        batch_size=32,
                                        shuffle=True,
-                                       num_workers=2)
+                                       num_workers=4)
 
     return train_dataloader, val_dataloader
 
@@ -45,6 +51,14 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
     criterion = nn.CrossEntropyLoss()
     # 将模型放入到训练设备中
     model = model.to(device)
+    # torch.compile 图编译加速；个别环境不支持时自动回退，不影响训练
+    try:
+        model = torch.compile(model)
+        print("[加速] torch.compile 已启用")
+    except Exception as e:
+        print(f"[提示] torch.compile 不可用，跳过: {e}")
+    # AMP 梯度缩放器（仅在 CUDA 上生效）
+    scaler = torch.cuda.amp.GradScaler(enabled=USE_AMP)
     # 复制当前模型的参数
     best_model_wts = copy.deepcopy(model.state_dict())
 
@@ -89,19 +103,23 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
             # 设置模型为训练模式
             model.train()
 
-            # 前向传播过程，输入为一个batch，输出为一个batch中对应的预测
-            output = model(b_x)
-            # 查找每一行中最大值对应的行标
-            pre_lab = torch.argmax(output, dim=1)
-            # 计算每一个batch的损失函数
-            loss = criterion(output, b_y)
-
             # 将梯度初始化为0
             optimizer.zero_grad()
-            # 反向传播计算
-            loss.backward()
-            # 根据网络反向传播的梯度信息来更新网络的参数，以起到降低loss函数计算值的作用
-            optimizer.step()
+
+            # AMP：FP16 前向 + 损失，权重保持 FP32
+            with torch.cuda.amp.autocast(enabled=USE_AMP):
+                # 前向传播过程，输入为一个batch，输出为一个batch中对应的预测
+                output = model(b_x)
+                # 计算每一个batch的损失函数
+                loss = criterion(output, b_y)
+
+            # 反向传播 + 更新（scaler 自动处理梯度缩放，防止 FP16 下溢）
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+
+            # 查找每一行中最大值对应的行标
+            pre_lab = torch.argmax(output, dim=1)
             # 对损失函数进行累加
             train_loss += loss.item() * b_x.size(0)
             # 如果预测正确，则准确度train_corrects加1
@@ -115,14 +133,14 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
             b_y = b_y.to(device)
             # 设置模型为评估模式
             model.eval()
-            # 前向传播过程，输入为一个batch，输出为一个batch中对应的预测
-            output = model(b_x)
+            with torch.no_grad(), torch.cuda.amp.autocast(enabled=USE_AMP):
+                # 前向传播过程，输入为一个batch，输出为一个batch中对应的预测
+                output = model(b_x)
+                # 计算每一个batch的损失函数
+                loss = criterion(output, b_y)
+
             # 查找每一行中最大值对应的行标
             pre_lab = torch.argmax(output, dim=1)
-            # 计算每一个batch的损失函数
-            loss = criterion(output, b_y)
-
-
             # 对损失函数进行累加
             val_loss += loss.item() * b_x.size(0)
             # 如果预测正确，则准确度train_corrects加1
@@ -156,9 +174,8 @@ def train_model_process(model, train_dataloader, val_dataloader, num_epochs):
 
     # 选择最优参数，保存最优参数的模型
     model.load_state_dict(best_model_wts)
-    # torch.save(model.load_state_dict(best_model_wts), "C:/Users/86159/Desktop/LeNet/best_model.pth")
     torch.save(best_model_wts, "best_model.pth")
-
+    print(f"最佳验证准确率: {best_acc:.4f}，已保存 best_model.pth")
 
     train_process = pd.DataFrame(data={"epoch":range(num_epochs),
                                        "train_loss_all":train_loss_all,
